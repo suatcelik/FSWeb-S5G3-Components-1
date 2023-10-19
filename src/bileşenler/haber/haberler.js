@@ -115,3 +115,58 @@ const data = [
   Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
   Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
 */
+
+function haberYapici(haber) {
+  const haberDiv = document.createElement("div");
+  haberDiv.classList.add("article");
+
+  const baslikElementi = document.createElement("h2");
+  baslikElementi.textContent = haber.baslik;
+  haberDiv.append(baslikElementi);
+
+  const tarihElementi = document.createElement("p");
+  tarihElementi.classList.add("tarih");
+  tarihElementi.textContent = haber.tarih;
+  haberDiv.append(tarihElementi); //
+
+  for (let i = 1; i <= 3; i++) {
+    const paragrafElementi = document.createElement("p");
+    paragrafElementi.textContent = haber[`ilkParagraf`];
+    haberDiv.append(paragrafElementi);
+  }
+
+  const expandButton = document.createElement("button");
+  expandButton.classList.add("expandButton");
+  expandButton.textContent = "+";
+  haberDiv.append(expandButton);
+
+  expandButton.addEventListener("click", function () {
+    haberDiv.classList.toggle("article-open");
+  });
+  return haberDiv;
+}
+
+const haberDugumleri = data.map((haber) => haberYapici(haber));
+
+const haberContainer = document.createElement("div");
+haberContainer.append(...haberDugumleri);
+
+document.body.append(haberContainer);
+
+const haberSaatı = document.createElement("div");
+haberSaatı.classList.add("articles");
+
+data.forEach((haber) => {
+  const haberDugumu = haberYapici(haber);
+  haberContainer.append(haberDugumu);
+});
+
+document.body.append(haberContainer);
+
+const yeniHaber = {
+  baslik: "Yeni Haber",
+  tarih: "20 Kasım 2022",
+  ilkParagraf: "Bu yeni haberin içeriği.",
+  ikinciParagraf: "Yeni haberin ikinci paragraf içeriği.",
+  ucuncuParagraf: "Yeni haberin üçüncü paragraf içeriği.",
+};
